@@ -1,0 +1,10 @@
+//
+// Created by user on 4/19/24.
+//
+
+#ifndef OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_HIGH_SCORES_H
+#define OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_HIGH_SCORES_H
+
+int work(int max_value, bool only_print);
+
+#endif //OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_HIGH_SCORES_H

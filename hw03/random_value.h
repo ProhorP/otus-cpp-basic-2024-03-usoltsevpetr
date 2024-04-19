@@ -1,0 +1,10 @@
+//
+// Created by user on 4/19/24.
+//
+
+#ifndef OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_RANDOM_VALUE_H
+#define OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_RANDOM_VALUE_H
+
+int get_random(int max_value);
+
+#endif //OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_RANDOM_VALUE_H
