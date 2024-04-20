@@ -7,7 +7,7 @@
 #include <string>
 #include "high_scores.h"
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
 
     int max_value = 100;
     bool only_print = false;
@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
         std::cout << "We have one more argument!" << std::endl;
         std::cout << "argv[1] = " << argv[1] << std::endl;
 
-        std::string arg1_value{ argv[1] };
+        std::string arg1_value{argv[1]};
         if (arg1_value == "–max") {
             std::cout << "-parameter argument was detected!" << std::endl;
 
@@ -38,8 +38,33 @@ int main(int argc, char** argv) {
             // We need to parse the string to the int value
             max_value = std::stoi(argv[2]);
             std::cout << "The '-parameter' value = " << max_value << std::endl;
-        } else if (arg1_value == "-table"){
+        } else if (arg1_value == "-table") {
             only_print = true;
+        } else if (arg1_value == "–level") {
+            std::cout << "-parameter argument was detected!" << std::endl;
+
+            // We've detected the '-parameter' argument. And we extect that after this argument there is a value:
+            if (argc < 3) {
+                std::cout << "Wrong usage! The argument '-parameter' requires some value!" << std::endl;
+                return -1;
+            }
+            // We need to parse the string to the int value
+            int level = std::stoi(argv[2]);
+            switch (level) {
+                case 1:
+                    max_value = 10;
+                    break;
+                case 2:
+                    max_value = 50;
+                    break;
+                case 3:
+                    max_value = 100;
+                    break;
+                default:
+                    std::cout << "invalid level" << std::endl;
+                    return -1;
+            }
+            std::cout << "The '-parameter' value = " << level << std::endl;
         }
     }
 

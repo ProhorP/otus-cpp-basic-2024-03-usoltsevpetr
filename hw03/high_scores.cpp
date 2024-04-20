@@ -25,8 +25,9 @@ int work(int max_value, bool only_print) {
 
         attempts_count = get_check(target_value);
 
-        //Дополнительное задание №3 реализовал через запись в промежуточный файл temp.txt
-        //и далее переименование промежуточного файла в high_scores.txt
+        //Доп.задание №3 - не сообразил как сделать без хэш-таблицы, т.к. мы их не проходили
+
+        //Доп.задание №4 Начало
 
         // Read the high score file and print all results
         std::ofstream out_file{temp_filename};
@@ -73,6 +74,7 @@ int work(int max_value, bool only_print) {
             remove(high_scores_filename.c_str());
         }
         rename(temp_filename.c_str(), high_scores_filename.c_str());
+        //Доп.задание №4 Конец
 
     }
 
