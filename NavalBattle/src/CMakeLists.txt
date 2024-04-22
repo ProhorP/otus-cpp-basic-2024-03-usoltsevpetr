@@ -12,11 +12,11 @@ add_executable(game
 	game.cpp
 )
 target_include_directories( game PRIVATE
-	${CMAKE_SOURCE_DIR}/src/
+	${CMAKE_SOURCE_DIR}/NavalBattle/src/
 )
 target_include_directories( game PRIVATE
-	${CMAKE_SOURCE_DIR}
-	${CMAKE_SOURCE_DIR}/menu/
+	${CMAKE_SOURCE_DIR}/NavalBattle
+	${CMAKE_SOURCE_DIR}/NavalBattle/menu/
 )
 target_link_libraries( game PRIVATE
 	menu

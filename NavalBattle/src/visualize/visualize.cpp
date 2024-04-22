@@ -22,6 +22,8 @@ namespace visualize {
 					return 'x';
 				case gamestate::State::Unknown:
 					return 'u';
+                case gamestate::State::Fail:
+                    return '-';
 			}
 			assert(false);
 			return ' ';

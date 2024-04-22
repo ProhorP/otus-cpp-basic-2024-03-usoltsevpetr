@@ -12,7 +12,7 @@ set_target_properties(menu_test PROPERTIES
 )
 
 target_include_directories( menu_test PRIVATE
-	${CMAKE_SOURCE_DIR}/menu/
+	${CMAKE_SOURCE_DIR}/NavalBattle/menu/
 )
 target_link_libraries(menu_test PRIVATE
 	menu

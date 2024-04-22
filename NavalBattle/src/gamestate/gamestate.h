@@ -8,7 +8,8 @@ namespace gamestate {
 		Empty   = 0,
 		Ship    = 1,
 		Hit     = 2,
-		Unknown = 3
+		Unknown = 3,
+        Fail    = 4
 	};
 
 	static const int MaxSize  = 10;

@@ -78,61 +78,75 @@ bool do_manual_deploy() {
 	return true;
 }
 
+menu::CoordinatesSection step_player(gamestate::State* field, gamestate::State* intel, int
+number){
+
+    menu::CoordinatesSection ret;
+    using namespace gamestate;
+
+    int row, col;
+    ret = menu::coordinates(size, row, col);
+    if (ret == menu::CoordinatesSection::Back)
+        return ret;
+
+    State player2_state;
+    bool isOk = get_state(field, row, col, player2_state);
+    if(!isOk) {
+        std::cerr << "Erorr due to set state for row = " << row << " col = " << col << "!" << std::endl;
+        return menu::CoordinatesSection::Back;
+    }
+
+    switch(player2_state) {
+        case State::Empty:
+            std::cout << "Empty!" << std::endl;
+            set_state(field, row, col, State::Fail);
+            set_state(intel, row, col, State::Fail);
+            break;
+        case State::Ship:
+            std::cout << "Ship was hit!" << std::endl;
+            set_state(field, row, col, State::Hit);
+            set_state(intel, row, col, State::Hit);
+            break;
+        case State::Hit:
+            std::cout << "Already hit this coordinates!" << std::endl;
+            break;
+        case State::Fail:
+            std::cout << "Already fail this coordinates!" << std::endl;
+            break;
+        default:
+            assert(false);
+    }
+
+    bool all_hit = true;
+    for(int i = 0; i < size && all_hit; ++i) {
+        for(int j = 0; j < size; ++j) {
+            State state;
+            get_state(field, i, j, state);
+            if(state == State::Ship) {
+                all_hit = false;
+                break;
+            }
+        }
+    }
+    if(all_hit) {
+        std::cout << "All player"<< number << "'s ship were hit! You win!" << std::endl;
+        return menu::CoordinatesSection::Back;
+    }
+
+    return ret;
+
+}
+
 void do_game() {
 	using namespace gamestate;
 
-	const int size = gamestate::get_field_size();
-	gamestate::State* player1_field = gamestate::get_player1_field();
-	State* player1_intel = get_player1_intel();
-	State* player2_field = get_player2_field();
-	// Does not required yet
-	// State* get_player2_intel()
+	State* player1_intel_ptr = get_player1_intel();
+    State* player2_intel_ptr = get_player2_intel();
+	State* player1_field_ptr = get_player1_field();
+    State* player2_field_ptr = get_player2_field();
 
-	menu::CoordinatesSection section;
-	do {
-
-		int row, col;
-		section = menu::coordinates(size, row, col);
-
-		State player2_state;
-		bool isOk = get_state(player2_field, row, col, player2_state);
-		if(!isOk) {
-			std::cerr << "Erorr due to set state for row = " << row << " col = " << col << "!" << std::endl;
-			return;
-		}
-		set_state(player2_field, row, col, State::Hit);
-
-		switch(player2_state) {
-			case State::Empty:
-				std::cout << "Empty!" << std::endl;
-				break;
-			case State::Ship:
-				std::cout << "Ship was hit!" << std::endl;
-				break;
-			case State::Hit:
-				std::cout << "Already hit this coordinates!" << std::endl;
-				break;
-			default:
-				assert(false);
-		}
-		set_state(player1_intel, row, col, player2_state);
-
-		bool all_hit = true;
-		for(int i = 0; i < size; ++i) {
-			for(int j = 0; j < size; ++j) {
-				State state;
-				get_state(player2_field, i, j, state);
-				if(state == State::Ship) {
-					all_hit = false;
-				}
-			}
-		}
-		if(all_hit) {
-			std::cout << "All player2's ship were hit! You win!" << std::endl;
-			break;
-		}
-
-	} while(section != menu::CoordinatesSection::Back);
+    while(step_player(player2_field_ptr, player1_intel_ptr, 2) == menu::CoordinatesSection::Next &&
+            step_player(player1_field_ptr, player2_intel_ptr, 1) == menu::CoordinatesSection::Next);
 }
 
 int main(int, char**) {
