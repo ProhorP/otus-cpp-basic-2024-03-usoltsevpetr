@@ -15,11 +15,11 @@ int get_check(const int target_value) {
         int current_value = 0;
         std::cin >> current_value;
 
-        if (current_value < target_value) {
+        if (current_value > target_value) {
             std::cout << "less than " << current_value << std::endl;
             count++;
         }
-        else if (current_value > target_value) {
+        else if (current_value < target_value) {
             std::cout << "greater than " << current_value << std::endl;
             count++;
         }

@@ -24,10 +24,10 @@ target_link_libraries(high_scores
 )
 
 add_executable(
-        hw02_GuessNumber
+        hw03_GuessNumber
         main.cpp
 )
 
-target_link_libraries(hw02_GuessNumber
+target_link_libraries(hw03_GuessNumber
         high_scores
 )

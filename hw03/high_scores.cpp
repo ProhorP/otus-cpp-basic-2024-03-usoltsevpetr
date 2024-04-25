@@ -6,13 +6,14 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <algorithm>
 #include "high_scores.h"
 #include "check_value.h"
 #include "random_value.h"
 
 namespace high_scopes {
 
-    int getdifferentNames(const std::string &fileName, std::vector<name_count> &differentNames) {
+    int getDifferentNames(const std::string &fileName, std::vector<name_count> &differentNames) {
         std::ifstream in_file{fileName};
         if (!in_file.is_open()) {
             std::cout << "Failed to open file for read: " << fileName << "!" << std::endl;
@@ -47,17 +48,20 @@ namespace high_scopes {
             // Print the information to the screen
         }
 
-        for (name_count &tmp: differentNames)
-            std::cout << tmp.username << '\t' << tmp.high_score << std::endl;
-
         return 0;
 
     }
 
+    bool CompareHighScores(const name_count& lhs, const name_count& rhs) {
+        return lhs.high_score < rhs.high_score;
+    }
+
     int print(const std::string &fileName) {
         std::vector<name_count> differentNames;
-        if (getdifferentNames(fileName, differentNames) < 0)
+        if (getDifferentNames(fileName, differentNames) < 0)
             return -1;
+
+        std::sort(differentNames.begin(), differentNames.end(), CompareHighScores);
 
         std::cout << "High scores table:" << std::endl;
         for (name_count &tmp: differentNames)
@@ -72,7 +76,7 @@ namespace high_scopes {
         int attempts_count = 0;
         int target_value = get_random(max_value);
         std::vector<name_count> differentNames;
-        if (getdifferentNames(fileName, differentNames) < 0)
+        if (getDifferentNames(fileName, differentNames) < 0)
             return -1;
 
         // We should open the output file in the append mode - we don't want
