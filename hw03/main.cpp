@@ -2,7 +2,6 @@
 // Created by user on 4/19/24.
 //
 
-#include "main.h"
 #include <iostream>
 #include <string>
 #include "high_scores.h"
@@ -68,6 +67,12 @@ int main(int argc, char **argv) {
         }
     }
 
-    return work(max_value, only_print);
+    const std::string high_scores_filename = "high_scores.txt";
+
+    if (!only_print)
+        if (high_scopes::game(max_value, high_scores_filename) < 0)
+            return -1;
+
+    return high_scopes::print(high_scores_filename);
 
 }
