@@ -12,15 +12,13 @@
 
 namespace high_scopes {
 
-    int print(const std::string &fileName) {
+    int getdifferentNames(const std::string &fileName, std::vector<name_count> &differentNames) {
         std::ifstream in_file{fileName};
         if (!in_file.is_open()) {
             std::cout << "Failed to open file for read: " << fileName << "!" << std::endl;
             return -1;
         }
 
-        std::vector<name_count> differentNames;
-        std::cout << "High scores table:" << std::endl;
         std::string username;
         int high_score = 0;
         while (true) {
@@ -56,10 +54,34 @@ namespace high_scopes {
 
     }
 
+    int print(const std::string &fileName) {
+        std::vector<name_count> differentNames;
+        if (getdifferentNames(fileName, differentNames) < 0)
+            return -1;
+
+        std::cout << "High scores table:" << std::endl;
+        for (name_count &tmp: differentNames)
+            std::cout << tmp.username << '\t' << tmp.high_score << std::endl;
+
+        return 0;
+
+    }
+
     int game(int max_value, const std::string &fileName) {
         std::string user_name;
         int attempts_count = 0;
         int target_value = get_random(max_value);
+        std::vector<name_count> differentNames;
+        if (getdifferentNames(fileName, differentNames) < 0)
+            return -1;
+
+        // We should open the output file in the append mode - we don't want
+        // to erase previous results.
+        std::ofstream file{fileName};
+        if (!file.is_open()) {
+            std::cout << "Failed to open file for write: " << fileName << "!" << std::endl;
+            return -1;
+        }
 
         // Ask about name
         std::cout << "Hi! Enter your name, please:" << std::endl;
@@ -67,21 +89,23 @@ namespace high_scopes {
 
         attempts_count = get_check(target_value);
 
-        // Write new high score to the records table
-        {
-            // We should open the output file in the append mode - we don't want
-            // to erase previous results.
-            std::ofstream out_file{fileName, std::ios_base::app};
-            if (!out_file.is_open()) {
-                std::cout << "Failed to open file for write: " << fileName << "!" << std::endl;
-                return -1;
+        bool find = false;
+        for (name_count &tmp: differentNames) {
+            if (tmp.username == user_name) {
+                if (tmp.high_score > attempts_count)
+                    tmp.high_score = attempts_count;
+                find = true;
+                break;
             }
+        }
+        if (!find)
+            differentNames.push_back({user_name, attempts_count});
 
-            // Append new results to the table:
-            out_file << user_name << ' ';
-            out_file << attempts_count;
-            out_file << std::endl;
-        } // end of score here just to mark end of the logic block of code
+        for (name_count &tmp: differentNames) {
+            file << tmp.username << ' ';
+            file << tmp.high_score;
+            file << std::endl;
+        }
 
         return 0;
     }
