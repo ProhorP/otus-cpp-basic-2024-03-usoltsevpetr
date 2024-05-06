@@ -1,0 +1,5 @@
+BasedOnStyle: LLVM
+IndentWidth: 5
+PointerAlignment: Left
+AllowShortFunctionsOnASingleLine: Empty
+NamespaceIndentation: All
