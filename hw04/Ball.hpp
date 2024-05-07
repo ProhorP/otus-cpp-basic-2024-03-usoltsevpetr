@@ -13,11 +13,15 @@ public:
           Radius = other.Radius;
           Mass = other.Mass;
           BallColor = other.BallColor;
+          this->setVelocity(other.getVelocity());
+          this->setCenter(other.getCenter());
      }
      inline Ball &operator=(const Ball &other){
           Radius = other.Radius;
           Mass = other.Mass;
           BallColor = other.BallColor;
+          this->setVelocity(other.getVelocity());
+          this->setCenter(other.getCenter());
           return *this;
      }
      inline ~Ball()= default;

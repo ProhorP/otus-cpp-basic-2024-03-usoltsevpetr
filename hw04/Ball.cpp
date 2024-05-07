@@ -7,7 +7,7 @@
  */
 void Ball::setVelocity(const Velocity& velocity) {
     // TODO: место для доработки
-    BallVelocity = velocity;
+    BallVelocity = Velocity(velocity.vector());
 }
 
 /**
@@ -37,7 +37,8 @@ void Ball::draw(Painter& painter) const {
  */
 void Ball::setCenter(const Point& center) {
     // TODO: место для доработки
-    Center = center;
+    Center = Point(center.x, center.y);
+
 }
 
 /**
