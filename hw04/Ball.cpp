@@ -7,7 +7,7 @@
  */
 void Ball::setVelocity(const Velocity& velocity) {
     // TODO: место для доработки
-    BallVelocity = Velocity(velocity.vector());
+    ballVelocity = Velocity(velocity.vector());
 }
 
 /**
@@ -15,7 +15,7 @@ void Ball::setVelocity(const Velocity& velocity) {
  */
 Velocity Ball::getVelocity() const {
     // TODO: место для доработки
-    return BallVelocity;
+    return ballVelocity;
 }
 
 /**
@@ -28,16 +28,16 @@ Velocity Ball::getVelocity() const {
  */
 void Ball::draw(Painter& painter) const {
     // TODO: место для доработки
-    painter.draw(Center, Radius, BallColor);
+    painter.draw(center, radius, ballColor);
 }
 
 /**
  * Задает координаты центра объекта
  * @param center новый центр объекта
  */
-void Ball::setCenter(const Point& center) {
+void Ball::setCenter(const Point& otherCenter) {
     // TODO: место для доработки
-    Center = Point(center.x, center.y);
+    center = Point(otherCenter.x, otherCenter.y);
 
 }
 
@@ -46,7 +46,7 @@ void Ball::setCenter(const Point& center) {
  */
 Point Ball::getCenter() const {
     // TODO: место для доработки
-    return Center;
+    return center;
 }
 
 /**
@@ -56,7 +56,7 @@ Point Ball::getCenter() const {
  */
 double Ball::getRadius() const {
     // TODO: место для доработки
-    return Radius;
+    return radius;
 }
 
 /**
@@ -68,5 +68,22 @@ double Ball::getRadius() const {
  */
 double Ball::getMass() const {
     // TODO: место для доработки
-    return Mass;
+    return M_PI * std::pow(radius, 3) * 4 / 3;
+}
+
+Ball::Ball(const Ball &other) {
+    radius = other.radius;
+    ballColor = other.ballColor;
+    setVelocity(other.getVelocity());
+    setCenter(other.getCenter());
+}
+
+Ball& Ball::operator=(const Ball &other){
+    if (this != &other){
+        radius = other.radius;
+        ballColor = other.ballColor;
+        setVelocity(other.getVelocity());
+        setCenter(other.getCenter());
+    }
+    return *this;
 }
