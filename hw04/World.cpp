@@ -7,6 +7,31 @@
 // Изменять не следует
 static constexpr double timePerTick = 0.001;
 
+std::istream& operator>>(std::istream& is, Point &point){
+    double x;
+    double y;
+    is >> x >> y;
+    point = Point(x, y);
+    return is;
+}
+
+std::istream& operator>>(std::istream& is, Velocity &velocity){
+    double vx;
+    double vy;
+    is >> vx >> vy;
+    velocity = Velocity(vx, vy);
+    return is;
+}
+
+std::istream& operator>>(std::istream& is, Color &color){
+    double red;
+    double green;
+    double blue;
+    is >> red >> green >> blue;
+    color = Color(red, green, blue);
+    return is;
+}
+
 /**
  * Конструирует объект мира для симуляции
  * @param worldFilePath путь к файлу модели мира
@@ -32,15 +57,18 @@ World::World(const std::string& worldFilePath) {
      * как и (red, green, blue). Опять же, можно упростить
      * этот код, научившись читать сразу Point, Color...
      */
-    double x;
-    double y;
-    double vx;
-    double vy;
+//    double x;
+//    double y;
+    Point center;
+//    double vx;
+//    double vy;
+    Velocity velocity;
     double radius;
 
-    double red;
-    double green;
-    double blue;
+//    double red;
+//    double green;
+//    double blue;
+    Color color;
 
     bool isCollidable;
 
@@ -49,9 +77,11 @@ World::World(const std::string& worldFilePath) {
     while (stream.peek(), stream.good()) {
         // Читаем координаты центра шара (x, y) и вектор
         // его скорости (vx, vy)
-        stream >> x >> y >> vx >> vy;
+//        stream >> x >> y >> vx >> vy;
+        stream >> center >> velocity;
         // Читаем три составляющие цвета шара
-        stream >> red >> green >> blue;
+//        stream >> red >> green >> blue;
+        stream >> color;
         // Читаем радиус шара
         stream >> radius;
         // Читаем свойство шара isCollidable, которое
@@ -69,9 +99,9 @@ World::World(const std::string& worldFilePath) {
         // сконструируем объект Ball ball;
         // добавьте его в конец контейнера вызовом
         // balls.push_back(ball);
-        Ball ball = Ball(radius, Color(red, green, blue));
-        ball.setCenter(Point(x, y));
-        ball.setVelocity(Velocity(vx, vy));
+        Ball ball = Ball(radius, color);
+        ball.setCenter(center);
+        ball.setVelocity(velocity);
 
         balls.push_back(ball);
     }
