@@ -21,8 +21,8 @@ void Physics::update(std::vector<Ball>& balls, const size_t ticks) const {
 }
 
 void Physics::collideBalls(std::vector<Ball>& balls) const {
-    for (auto a = balls.begin(); a != balls.end(); ++a) {
-        for (auto b = std::next(a); b != balls.end(); ++b) {
+    for (auto a = balls.begin(); a != balls.end() && a->getIsCollidable(); ++a) {
+        for (auto b = std::next(a); b != balls.end() && b->getIsCollidable(); ++b) {
             const double distanceBetweenCenters2 =
                 distance2(a->getCenter(), b->getCenter());
             const double collisionDistance = a->getRadius() + b->getRadius();

@@ -5,8 +5,8 @@
 
 class Ball {
   public:
-    inline Ball(double radius, const Color& color)
-        : radius(radius), color(color){};
+    inline Ball(double radius, const Color& color, bool isCollidable)
+        : radius(radius), color(color), isCollidable(isCollidable){};
     Ball(const Ball& other);
     Ball& operator=(const Ball& other);
     inline ~Ball() = default;
@@ -18,10 +18,12 @@ class Ball {
     Point getCenter() const;
     double getRadius() const;
     double getMass() const;
+    bool getIsCollidable() const;
 
   private:
     Velocity velocity;
     double radius;
     Point center;
     Color color;
+    bool isCollidable;
 };

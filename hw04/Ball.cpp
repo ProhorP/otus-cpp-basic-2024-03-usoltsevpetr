@@ -74,6 +74,7 @@ double Ball::getMass() const {
 Ball::Ball(const Ball &other) {
     radius = other.radius;
     color = other.color;
+    isCollidable = other.isCollidable;
     setVelocity(other.getVelocity());
     setCenter(other.getCenter());
 }
@@ -82,8 +83,12 @@ Ball& Ball::operator=(const Ball &other){
     if (this != &other){
         radius = other.radius;
         color = other.color;
+        isCollidable = other.isCollidable;
         setVelocity(other.getVelocity());
         setCenter(other.getCenter());
     }
     return *this;
+}
+bool Ball::getIsCollidable() const{
+    return isCollidable;
 }
