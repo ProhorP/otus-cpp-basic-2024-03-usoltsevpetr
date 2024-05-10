@@ -3,11 +3,11 @@
 
 /**
  * Задает скорость объекта
- * @param velocity новое значение скорости
+ * @param attrVelocity новое значение скорости
  */
-void Ball::setVelocity(const Velocity& velocity) {
+void Ball::setVelocity(const Velocity& attrVelocity) {
     // TODO: место для доработки
-    ballVelocity = Velocity(velocity.vector());
+    velocity = Velocity(attrVelocity.vector());
 }
 
 /**
@@ -15,7 +15,7 @@ void Ball::setVelocity(const Velocity& velocity) {
  */
 Velocity Ball::getVelocity() const {
     // TODO: место для доработки
-    return ballVelocity;
+    return velocity;
 }
 
 /**
@@ -28,7 +28,7 @@ Velocity Ball::getVelocity() const {
  */
 void Ball::draw(Painter& painter) const {
     // TODO: место для доработки
-    painter.draw(center, radius, ballColor);
+    painter.draw(center, radius, color);
 }
 
 /**
@@ -73,7 +73,7 @@ double Ball::getMass() const {
 
 Ball::Ball(const Ball &other) {
     radius = other.radius;
-    ballColor = other.ballColor;
+    color = other.color;
     setVelocity(other.getVelocity());
     setCenter(other.getCenter());
 }
@@ -81,7 +81,7 @@ Ball::Ball(const Ball &other) {
 Ball& Ball::operator=(const Ball &other){
     if (this != &other){
         radius = other.radius;
-        ballColor = other.ballColor;
+        color = other.color;
         setVelocity(other.getVelocity());
         setCenter(other.getCenter());
     }

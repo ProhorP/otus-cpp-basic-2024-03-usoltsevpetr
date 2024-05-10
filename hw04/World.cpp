@@ -70,11 +70,10 @@ World::World(const std::string& worldFilePath) {
         // добавьте его в конец контейнера вызовом
         // balls.push_back(ball);
         Ball ball = Ball(radius, Color(red, green, blue));
-        ball.setCenter(Point(x,y));
+        ball.setCenter(Point(x, y));
         ball.setVelocity(Velocity(vx, vy));
 
         balls.push_back(ball);
-
     }
 }
 

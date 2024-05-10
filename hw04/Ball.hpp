@@ -5,13 +5,13 @@
 
 class Ball {
   public:
-    inline Ball(double radius, const Color& ballColor)
-        : radius(radius), ballColor(ballColor){};
+    inline Ball(double radius, const Color& color)
+        : radius(radius), color(color){};
     Ball(const Ball& other);
     Ball& operator=(const Ball& other);
     inline ~Ball() = default;
 
-    void setVelocity(const Velocity& velocity);
+    void setVelocity(const Velocity& attrVelocity);
     Velocity getVelocity() const;
     void draw(Painter& painter) const;
     void setCenter(const Point& center);
@@ -20,8 +20,8 @@ class Ball {
     double getMass() const;
 
   private:
-    Velocity ballVelocity;
+    Velocity velocity;
     double radius;
     Point center;
-    Color ballColor;
+    Color color;
 };
