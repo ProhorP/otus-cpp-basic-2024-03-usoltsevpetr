@@ -14,6 +14,7 @@ class Physics {
     void move(std::vector<Ball>& balls) const;
     void processCollision(Ball& a, Ball& b,
                           double distanceBetweenCenters2) const;
+    void addDusts(Ball& ball) const;
 
   private:
     Point topLeft;

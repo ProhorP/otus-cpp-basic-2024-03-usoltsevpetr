@@ -22,8 +22,10 @@ void Physics::update(std::vector<Ball>& balls, const size_t ticks) const {
 
 void Physics::collideBalls(std::vector<Ball>& balls) const {
     for (auto a = balls.begin(); a != balls.end(); ++a) {
+        if (!a->getIsCollidable())
+            continue;
         for (auto b = std::next(a); b != balls.end(); ++b) {
-            if (!a->getIsCollidable() || !b->getIsCollidable())
+            if (!b->getIsCollidable())
                 continue;
 
             const double distanceBetweenCenters2 =
@@ -34,6 +36,8 @@ void Physics::collideBalls(std::vector<Ball>& balls) const {
 
             if (distanceBetweenCenters2 < collisionDistance2) {
                 processCollision(*a, *b, distanceBetweenCenters2);
+                addDusts(*a);
+                addDusts(*b);
             }
         }
     }
@@ -65,7 +69,38 @@ void Physics::move(std::vector<Ball>& balls) const {
         Point newPos =
             ball.getCenter() + ball.getVelocity().vector() * timePerTick;
         ball.setCenter(newPos);
+        ball.moveDusts(timePerTick);
     }
+}
+
+void Physics::addDusts(Ball& ball) const{
+
+    //добавляем эффекты для каждого шара, а не в мир, чтобы не менять интерфейс
+
+    for (int i = 0 ; i < 4; ++i) {
+        Dust dust;
+        dust.setCenter(ball.getCenter());
+
+        switch (i) {
+        case 0:
+            dust.setVelocity(Velocity(500, 1000));
+            break;;
+        case 1:
+            dust.setVelocity(Velocity(-500, 1000));
+            break;;
+        case 2:
+            dust.setVelocity(Velocity(500, -1000));
+            break;;
+        case 3:
+            dust.setVelocity(Velocity(-500, -1000));
+            break;
+        default:
+            break;
+        }
+
+        ball.addDust(dust);
+    }
+
 }
 
 void Physics::processCollision(Ball& a, Ball& b,

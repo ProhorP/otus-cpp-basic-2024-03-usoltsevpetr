@@ -31,6 +31,12 @@ void Ball::draw(Painter& painter) const {
     painter.draw(center, radius, color);
 }
 
+void Ball::drawDusts(Painter& painter) const {
+    for (const Dust& dust : dusts) {
+        dust.draw(painter);
+    }
+}
+
 /**
  * Задает координаты центра объекта
  * @param center новый центр объекта
@@ -38,7 +44,6 @@ void Ball::draw(Painter& painter) const {
 void Ball::setCenter(const Point& otherCenter) {
     // TODO: место для доработки
     center = Point(otherCenter.x, otherCenter.y);
-
 }
 
 /**
@@ -71,7 +76,7 @@ double Ball::getMass() const {
     return M_PI * std::pow(radius, 3) * 4 / 3;
 }
 
-Ball::Ball(const Ball &other) {
+Ball::Ball(const Ball& other) {
     radius = other.radius;
     color = other.color;
     isCollidable = other.isCollidable;
@@ -79,8 +84,8 @@ Ball::Ball(const Ball &other) {
     setCenter(other.getCenter());
 }
 
-Ball& Ball::operator=(const Ball &other){
-    if (this != &other){
+Ball& Ball::operator=(const Ball& other) {
+    if (this != &other) {
         radius = other.radius;
         color = other.color;
         isCollidable = other.isCollidable;
@@ -89,6 +94,28 @@ Ball& Ball::operator=(const Ball &other){
     }
     return *this;
 }
-bool Ball::getIsCollidable() const{
+bool Ball::getIsCollidable() const {
     return isCollidable;
+}
+
+void Ball::addDust(Dust& dust) {
+    dusts.push_back(dust);
+}
+
+void Ball::moveDusts(double timePerTick) {
+    bool dustClean = true;
+
+    for (Dust& dust : dusts) {
+        size_t timer = dust.getTimer();
+        if (!timer)
+            continue;
+        dust.setTimer(timer - 1);
+        Point newPos =
+            dust.getCenter() + dust.getVelocity().vector() * timePerTick;
+        dust.setCenter(newPos);
+        dustClean = false;
+    }
+
+    if (!dusts.empty() && dustClean)
+        dusts.clear();
 }

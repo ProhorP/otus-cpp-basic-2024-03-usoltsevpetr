@@ -116,6 +116,7 @@ void World::show(Painter& painter) const {
     // Вызываем отрисовку каждого шара
     for (const Ball& ball : balls) {
         ball.draw(painter);
+        ball.drawDusts(painter);
     }
 }
 

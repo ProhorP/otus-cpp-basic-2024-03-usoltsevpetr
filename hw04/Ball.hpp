@@ -1,7 +1,9 @@
 #pragma once
+#include "Dust.hpp"
 #include "Painter.hpp"
 #include "Point.hpp"
 #include "Velocity.hpp"
+#include <vector>
 
 class Ball {
   public:
@@ -14,11 +16,14 @@ class Ball {
     void setVelocity(const Velocity& attrVelocity);
     Velocity getVelocity() const;
     void draw(Painter& painter) const;
+    void drawDusts(Painter& painter) const;
     void setCenter(const Point& center);
     Point getCenter() const;
     double getRadius() const;
     double getMass() const;
     bool getIsCollidable() const;
+    void addDust(Dust &dust);
+    void moveDusts(double timePerTick);
 
   private:
     Velocity velocity;
@@ -26,4 +31,6 @@ class Ball {
     Point center;
     Color color;
     bool isCollidable;
+    // Контейнер с эффектами
+    std::vector<Dust> dusts;
 };
