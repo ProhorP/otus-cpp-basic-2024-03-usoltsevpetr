@@ -19,7 +19,7 @@ std::istream& operator>>(std::istream& is, Velocity &velocity){
     double vx;
     double vy;
     is >> vx >> vy;
-    velocity = Velocity(vx, vy);
+    velocity = Velocity(Point(vx, vy));
     return is;
 }
 
