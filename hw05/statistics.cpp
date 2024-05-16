@@ -155,14 +155,6 @@ class pct90 : public pct {
   public:
     pct90() : pct(90.0) {};
 
-    void update(double next) override {
-        pct::update(next);
-    }
-
-    double eval() const override {
-        return pct::eval();
-    }
-
     const char* name() const override {
         return "pct90";
     }
@@ -172,14 +164,6 @@ class pct90 : public pct {
 class pct95 : public pct {
   public:
     pct95() : pct(95.0) {};
-
-    void update(double next) override {
-        pct::update(next);
-    }
-
-    double eval() const override {
-        return pct::eval();
-    }
 
     const char* name() const override {
         return "pct95";
