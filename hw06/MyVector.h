@@ -22,7 +22,7 @@ class MyVector: public MyContainer {
     void erase(std::size_t pos) override;
     std::size_t size() const override;
     int& operator[](std::size_t pos) const override;
-    std::ostream& operator<<(std::ostream& os) const;
+//    std::ostream& operator<<(std::ostream& os) const;
 
     struct iterator{
       public:

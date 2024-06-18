@@ -11,7 +11,7 @@
 class MyForvardList: public MyContainer {
 
   public:
-    MyForvardList() : data{nullptr}, curSize{0}, capacity{0}{};
+    MyForvardList() : head{nullptr}, tail{nullptr}, curSize{0}{};
     MyForvardList(const MyForvardList& other);
     MyForvardList& operator=(const MyForvardList& other);
     MyForvardList& operator=(MyForvardList&& other) noexcept ;
@@ -25,27 +25,32 @@ class MyForvardList: public MyContainer {
     int& operator[](std::size_t pos) const override;
     std::ostream& operator<<(std::ostream& os) const;
 
+    struct Node{
+        Node* next;
+        int data;
+    };
+
     struct iterator{
       public:
-        iterator(int *ptr) : ptr{ptr}{};
+        iterator(Node *ptr) : ptr{ptr}{};
         iterator& operator++();
         bool operator!=(const iterator& other);
         int& operator*();
         int& get();
 
       private:
-        int *ptr;
+        Node *ptr;
     };
 
     iterator begin() const;
     iterator end() const ;
 
   private:
-    void realloc();
+    void add(int value);
     bool check_position(std::size_t pos) const;
-    int *data;
+    Node *head;
+    Node *tail;
     std::size_t curSize;
-    std::size_t capacity;
 };
 
 std::ostream& operator<<(std::ostream& os, const MyForvardList &rhs) ;
