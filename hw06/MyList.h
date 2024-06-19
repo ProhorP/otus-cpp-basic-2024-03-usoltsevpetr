@@ -35,6 +35,7 @@ class MyList: public MyContainer {
       public:
         iterator(Node *ptr) : ptr{ptr}{};
         iterator& operator++();
+        iterator& operator--();
         bool operator!=(const iterator& other);
         int& operator*();
         int& get();

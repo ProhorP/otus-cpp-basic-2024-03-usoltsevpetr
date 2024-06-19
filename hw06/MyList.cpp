@@ -142,6 +142,13 @@ MyList::iterator& MyList::iterator::operator++() {
     return *this;
 }
 
+MyList::iterator& MyList::iterator::operator--() {
+    if (!ptr)
+        throw "empty iterator";
+    ptr = ptr->prev;
+    return *this;
+}
+
 MyList::iterator MyList::begin() const {
     return {head};
 }

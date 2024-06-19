@@ -6,18 +6,32 @@
 #include "MyList.h"
 
 int main() {
-//        MyVector v1;
+        MyVector v1;
 //    MyForvardList v1;
-    MyList v1;
-    for (int i = 1; i < 11; ++i) {
+//    MyList v1;
+    for (int i = 0; i < 10; ++i) {
         v1.push_back(i);
     }
-//    MyVector v2 = std::move(v1);
+    MyVector v2 = std::move(v1);
 //    MyForvardList v2 = std::move(v1);
-    MyList v2 = std::move(v1);
+//    MyList v2 = std::move(v1);
     std::cout << v2 << std::endl;
-    v2.insert(0, 5);
+
+    std::cout << v2.size() << std::endl;
+
+    //т.к. после удаления идет смещение массива, то позиция удаления для пятого и 7-го элементов будет
+    //смещена на 1 для 5-го и на 2 для 7-го элементов
+    v2.erase(2);
+    v2.erase(3);
+    v2.erase(4);
     std::cout << v2 << std::endl;
-    v2.erase(0);
+
+    v2.insert(0, 10);
+    std::cout << v2 << std::endl;
+
+    v2.insert(v2.size()/2, 20);
+    std::cout << v2 << std::endl;
+
+    v2.push_back(30);
     std::cout << v2 << std::endl;
 }
