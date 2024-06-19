@@ -5,31 +5,31 @@
 #include "MyList.h"
 
 void MyList::append(int value) {
-    Node* tmpNew = new Node;
-    tmpNew->data = value;
-    tmpNew->next = nullptr;
-    tmpNew->prev = nullptr;
+    Node* newNode = new Node;
+    newNode->data = value;
+    newNode->next = nullptr;
+    newNode->prev = tail;
     if (!head)
-        head = tmpNew;
+        head = newNode;
     if (tail) {
-        tail->next = tmpNew;
-        tail = tmpNew;
+        tail->next = newNode;
+        tail = newNode;
     } else {
-        tail = tmpNew;
+        tail = newNode;
     }
     curSize++;
 }
 
 MyList::MyList(const MyList& other): head{nullptr}, tail{nullptr}, curSize{0} {
-    for (Node* tmp = other.head; tmp; tmp = tmp->next) {
-        append(tmp->data);
+    for (Node* node = other.head; node; node = node->next) {
+        append(node->data);
     }
 }
 
 MyList& MyList::operator=(const MyList& other) {
     if (this != &other) {
-        for (Node* tmp = other.head; tmp; tmp = tmp->next) {
-            append(tmp->data);
+        for (Node* node = other.head; node; node = node->next) {
+            append(node->data);
         }
     }
     return *this;
@@ -60,10 +60,10 @@ MyList& MyList::operator=(MyList&& other) noexcept {
 }
 
 MyList::~MyList() {
-    Node* tmp_next = nullptr;
-    for (Node* tmp = head; tmp; tmp = tmp_next) {
-        tmp_next = tmp->next;
-        delete tmp;
+    Node* node_next = nullptr;
+    for (Node* node = head; node; node = node_next) {
+        node_next = node->next;
+        delete node;
     }
 };
 
@@ -74,23 +74,25 @@ void MyList::push_back(int value) {
 void MyList::insert(std::size_t pos, int value) {
 
     std::size_t i = 0;
-    Node* prev_tmp = nullptr;
+    Node* prevNode = nullptr;
     std::size_t prevSize = curSize;
-    for (Node* tmp = head; tmp; tmp = tmp->next, i++) {
+    for (Node* node = head; node; node = node->next, i++) {
         if (i == pos) {
-            Node* tmpNew = new Node;
-            tmpNew->data = value;
-            if (prev_tmp) {
-                tmpNew->next = prev_tmp->next;
-                prev_tmp->next = tmpNew;
+            Node* newNode = new Node;
+            newNode->data = value;
+            newNode->prev = prevNode;
+            node->prev = newNode;
+            if (prevNode) {
+                newNode->next = prevNode->next;
+                prevNode->next = newNode;
             } else {
-                tmpNew->next = head;
-                head = tmpNew;
+                newNode->next = head;
+                head = newNode;
             }
             curSize++;
             break;
         }
-        prev_tmp = tmp;
+        prevNode = node;
     }
     if (curSize == prevSize)
         append(value);
@@ -99,21 +101,21 @@ void MyList::insert(std::size_t pos, int value) {
 void MyList::erase(std::size_t pos) {
 
     std::size_t i = 0;
-    Node* prev_tmp = nullptr;
-    for (Node* tmp = head; tmp; tmp = tmp->next, i++) {
+    Node* prevNode = nullptr;
+    for (Node* node = head; node; node = node->next, i++) {
         if (i == pos) {
-            if (prev_tmp) {
-                prev_tmp->next = tmp->next;
+            if (prevNode) {
+                prevNode->next = node->next;
             } else {
-                head = tmp->next;
+                head = node->next;
             }
-            if (tail == tmp)
-                tail = prev_tmp;
+            if (tail == node)
+                tail = prevNode;
             curSize--;
-            delete tmp;
+            delete node;
             break;
         }
-        prev_tmp = tmp;
+        prevNode = node;
     }
 };
 
@@ -124,9 +126,9 @@ std::size_t MyList::size() const {
 int& MyList::operator[](std::size_t pos) const {
 
     std::size_t i = 0;
-    for (Node* tmp = head; tmp; tmp = tmp->next, i++) {
+    for (Node* node = head; node; node = node->next, i++) {
         if (i == pos) {
-            return tmp->data;
+            return node->data;
         }
     }
 

@@ -5,30 +5,30 @@
 #include "MyForvardList.h"
 
 void MyForvardList::append(int value) {
-    Node* tmpNew = new Node;
-    tmpNew->data = value;
-    tmpNew->next = nullptr;
+    Node* newNode = new Node;
+    newNode->data = value;
+    newNode->next = nullptr;
     if (!head)
-        head = tmpNew;
+        head = newNode;
     if (tail) {
-        tail->next = tmpNew;
-        tail = tmpNew;
+        tail->next = newNode;
+        tail = newNode;
     } else {
-        tail = tmpNew;
+        tail = newNode;
     }
     curSize++;
 }
 
 MyForvardList::MyForvardList(const MyForvardList& other): head{nullptr}, tail{nullptr}, curSize{0} {
-    for (Node* tmp = other.head; tmp; tmp = tmp->next) {
-        append(tmp->data);
+    for (Node* node = other.head; node; node = node->next) {
+        append(node->data);
     }
 }
 
 MyForvardList& MyForvardList::operator=(const MyForvardList& other) {
     if (this != &other) {
-        for (Node* tmp = other.head; tmp; tmp = tmp->next) {
-            append(tmp->data);
+        for (Node* node = other.head; node; node = node->next) {
+            append(node->data);
         }
     }
     return *this;
@@ -59,10 +59,10 @@ MyForvardList& MyForvardList::operator=(MyForvardList&& other) noexcept {
 }
 
 MyForvardList::~MyForvardList() {
-    Node* tmp_next = nullptr;
-    for (Node* tmp = head; tmp; tmp = tmp_next) {
-        tmp_next = tmp->next;
-        delete tmp;
+    Node* node_next = nullptr;
+    for (Node* node = head; node; node = node_next) {
+        node_next = node->next;
+        delete node;
     }
 };
 
@@ -73,23 +73,23 @@ void MyForvardList::push_back(int value) {
 void MyForvardList::insert(std::size_t pos, int value) {
 
     std::size_t i = 0;
-    Node* prev_tmp = nullptr;
+    Node* prevNode = nullptr;
     std::size_t prevSize = curSize;
-    for (Node* tmp = head; tmp; tmp = tmp->next, i++) {
+    for (Node* node = head; node; node = node->next, i++) {
         if (i == pos) {
-            Node* tmpNew = new Node;
-            tmpNew->data = value;
-            if (prev_tmp) {
-                tmpNew->next = prev_tmp->next;
-                prev_tmp->next = tmpNew;
+            Node* newNode = new Node;
+            newNode->data = value;
+            if (prevNode) {
+                newNode->next = prevNode->next;
+                prevNode->next = newNode;
             } else {
-                tmpNew->next = head;
-                head = tmpNew;
+                newNode->next = head;
+                head = newNode;
             }
             curSize++;
             break;
         }
-        prev_tmp = tmp;
+        prevNode = node;
     }
     if (curSize == prevSize)
         append(value);
@@ -98,21 +98,21 @@ void MyForvardList::insert(std::size_t pos, int value) {
 void MyForvardList::erase(std::size_t pos) {
 
     std::size_t i = 0;
-    Node* prev_tmp = nullptr;
-    for (Node* tmp = head; tmp; tmp = tmp->next, i++) {
+    Node* prevNode = nullptr;
+    for (Node* node = head; node; node = node->next, i++) {
         if (i == pos) {
-            if (prev_tmp) {
-                prev_tmp->next = tmp->next;
+            if (prevNode) {
+                prevNode->next = node->next;
             } else {
-                head = tmp->next;
+                head = node->next;
             }
-            if (tail == tmp)
-                tail = prev_tmp;
+            if (tail == node)
+                tail = prevNode;
             curSize--;
-            delete tmp;
+            delete node;
             break;
         }
-        prev_tmp = tmp;
+        prevNode = node;
     }
 };
 
@@ -123,9 +123,9 @@ std::size_t MyForvardList::size() const {
 int& MyForvardList::operator[](std::size_t pos) const {
 
     std::size_t i = 0;
-    for (Node* tmp = head; tmp; tmp = tmp->next, i++) {
+    for (Node* node = head; node; node = node->next, i++) {
         if (i == pos) {
-            return tmp->data;
+            return node->data;
         }
     }
 
