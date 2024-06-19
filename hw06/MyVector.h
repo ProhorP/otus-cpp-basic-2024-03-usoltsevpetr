@@ -17,8 +17,8 @@ class MyVector: public MyContainer {
     MyVector(MyVector&& other) noexcept ;
     ~MyVector() override;
 
-    void push_back(int next) override;
-    void insert(std::size_t pos, int next) override;
+    void push_back(int value) override;
+    void insert(std::size_t pos, int value) override;
     void erase(std::size_t pos) override;
     std::size_t size() const override;
     int& operator[](std::size_t pos) const override;

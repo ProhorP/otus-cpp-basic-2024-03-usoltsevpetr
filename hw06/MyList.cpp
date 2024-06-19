@@ -2,12 +2,13 @@
 // Created by user on 6/3/24.
 //
 
-#include "MyForvardList.h"
+#include "MyList.h"
 
-void MyForvardList::append(int value) {
+void MyList::append(int value) {
     Node* tmpNew = new Node;
     tmpNew->data = value;
     tmpNew->next = nullptr;
+    tmpNew->prev = nullptr;
     if (!head)
         head = tmpNew;
     if (tail) {
@@ -19,13 +20,13 @@ void MyForvardList::append(int value) {
     curSize++;
 }
 
-MyForvardList::MyForvardList(const MyForvardList& other): head{nullptr}, tail{nullptr}, curSize{0} {
+MyList::MyList(const MyList& other): head{nullptr}, tail{nullptr}, curSize{0} {
     for (Node* tmp = other.head; tmp; tmp = tmp->next) {
         append(tmp->data);
     }
 }
 
-MyForvardList& MyForvardList::operator=(const MyForvardList& other) {
+MyList& MyList::operator=(const MyList& other) {
     if (this != &other) {
         for (Node* tmp = other.head; tmp; tmp = tmp->next) {
             append(tmp->data);
@@ -35,8 +36,8 @@ MyForvardList& MyForvardList::operator=(const MyForvardList& other) {
 }
 
 // Move ctor
-MyForvardList::MyForvardList(
-    MyForvardList&& other) noexcept { // r-value reference
+MyList::MyList(
+    MyList&& other) noexcept { // r-value reference
     head = other.head;
     other.head = nullptr;
     tail = other.tail;
@@ -46,7 +47,7 @@ MyForvardList::MyForvardList(
 }
 
 // Move assignment operator
-MyForvardList& MyForvardList::operator=(MyForvardList&& other) noexcept {
+MyList& MyList::operator=(MyList&& other) noexcept {
     if (this != &other) {
         head = other.head;
         other.head = nullptr;
@@ -58,7 +59,7 @@ MyForvardList& MyForvardList::operator=(MyForvardList&& other) noexcept {
     return *this;
 }
 
-MyForvardList::~MyForvardList() {
+MyList::~MyList() {
     Node* tmp_next = nullptr;
     for (Node* tmp = head; tmp; tmp = tmp_next) {
         tmp_next = tmp->next;
@@ -66,11 +67,11 @@ MyForvardList::~MyForvardList() {
     }
 };
 
-void MyForvardList::push_back(int value) {
+void MyList::push_back(int value) {
     append(value);
 };
 
-void MyForvardList::insert(std::size_t pos, int value) {
+void MyList::insert(std::size_t pos, int value) {
 
     std::size_t i = 0;
     Node* prev_tmp = nullptr;
@@ -95,7 +96,7 @@ void MyForvardList::insert(std::size_t pos, int value) {
         append(value);
 };
 
-void MyForvardList::erase(std::size_t pos) {
+void MyList::erase(std::size_t pos) {
 
     std::size_t i = 0;
     Node* prev_tmp = nullptr;
@@ -116,11 +117,11 @@ void MyForvardList::erase(std::size_t pos) {
     }
 };
 
-std::size_t MyForvardList::size() const {
+std::size_t MyList::size() const {
     return curSize;
 };
 
-int& MyForvardList::operator[](std::size_t pos) const {
+int& MyList::operator[](std::size_t pos) const {
 
     std::size_t i = 0;
     for (Node* tmp = head; tmp; tmp = tmp->next, i++) {
@@ -132,34 +133,34 @@ int& MyForvardList::operator[](std::size_t pos) const {
     throw "out of the range";
 };
 
-MyForvardList::iterator& MyForvardList::iterator::operator++() {
+MyList::iterator& MyList::iterator::operator++() {
     if (!ptr)
         throw "empty iterator";
     ptr = ptr->next;
     return *this;
 }
 
-MyForvardList::iterator MyForvardList::begin() const {
+MyList::iterator MyList::begin() const {
     return {head};
 }
 
-MyForvardList::iterator MyForvardList::end() const {
+MyList::iterator MyList::end() const {
     return {nullptr};
 }
 
-bool MyForvardList::iterator::operator!=(const iterator& other) {
+bool MyList::iterator::operator!=(const iterator& other) {
     return ptr != other.ptr;
 }
 
-int& MyForvardList::iterator::get() {
+int& MyList::iterator::get() {
     return ptr->data;
 }
 
-int& MyForvardList::iterator::operator*() {
+int& MyList::iterator::operator*() {
     return get();
 }
 
-std::ostream& operator<<(std::ostream& os, const MyForvardList& rhs) {
+std::ostream& operator<<(std::ostream& os, const MyList& rhs) {
     for (auto iter = rhs.begin(); iter != rhs.end(); ++iter) {
         if (iter != rhs.begin())
             os << ' ';

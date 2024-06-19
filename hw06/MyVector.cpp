@@ -70,13 +70,13 @@ void MyVector::realloc() {
     }
 }
 
-void MyVector::push_back(int next) {
+void MyVector::push_back(int value) {
 
     curSize++;
 
     realloc();
 
-    data[curSize - 1] = next;
+    data[curSize - 1] = value;
 };
 
 bool MyVector::check_position(std::size_t pos) const {
@@ -87,7 +87,7 @@ bool MyVector::check_position(std::size_t pos) const {
     return true;
 }
 
-void MyVector::insert(std::size_t pos, int next) {
+void MyVector::insert(std::size_t pos, int value) {
 
     if (!check_position(pos))
         return;
@@ -99,10 +99,12 @@ void MyVector::insert(std::size_t pos, int next) {
     if (curSize > 1) {
         for (std::size_t i = curSize - 2; i >= pos; --i) {
             data[i + 1] = data[i];
+            if (i == 0)
+                break;
         }
     }
 
-    data[pos] = next;
+    data[pos] = value;
 };
 
 void MyVector::erase(std::size_t pos) {

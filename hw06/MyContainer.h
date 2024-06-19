@@ -8,10 +8,10 @@
 
 class MyContainer {
   public:
-    virtual ~MyContainer() {}
+    virtual ~MyContainer() = default;
 
-    virtual void push_back(int next) = 0;
-    virtual void insert(std::size_t pos, int next) = 0;
+    virtual void push_back(int value) = 0;
+    virtual void insert(std::size_t pos, int value) = 0;
     virtual void erase(std::size_t pos) = 0;
     virtual std::size_t size() const = 0;
     virtual int& operator[](std::size_t pos) const = 0;

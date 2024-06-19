@@ -2,21 +2,21 @@
 // Created by user on 6/3/24.
 //
 
-#ifndef OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_MYFORVARDLIST_H
-#define OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_MYFORVARDLIST_H
+#ifndef OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_MYLIST_H
+#define OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_MYLIST_H
 
 #include "MyContainer.h"
 #include <iostream>
 
-class MyForvardList: public MyContainer {
+class MyList: public MyContainer {
 
   public:
-    MyForvardList() : head{nullptr}, tail{nullptr}, curSize{0}{};
-    MyForvardList(const MyForvardList& other) ;
-    MyForvardList& operator=(const MyForvardList& other);
-    MyForvardList& operator=(MyForvardList&& other) noexcept ;
-    MyForvardList(MyForvardList&& other) noexcept ;
-    ~MyForvardList() override;
+    MyList() : head{nullptr}, tail{nullptr}, curSize{0}{};
+    MyList(const MyList& other) ;
+    MyList& operator=(const MyList& other);
+    MyList& operator=(MyList&& other) noexcept ;
+    MyList(MyList&& other) noexcept ;
+    ~MyList() override;
 
     void push_back(int value) override;
     void insert(std::size_t pos, int value) override;
@@ -27,6 +27,7 @@ class MyForvardList: public MyContainer {
 
     struct Node{
         Node* next;
+        Node* prev;
         int data;
     };
 
@@ -52,6 +53,6 @@ class MyForvardList: public MyContainer {
     std::size_t curSize;
 };
 
-std::ostream& operator<<(std::ostream& os, const MyForvardList &rhs) ;
+std::ostream& operator<<(std::ostream& os, const MyList &rhs) ;
 
-#endif // OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_MYFORVARDLIST_H
+#endif // OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_MYLIST_H
