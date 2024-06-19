@@ -7,8 +7,7 @@ add_executable(my_container
         MyContainer.h
         MyVector.h
         MyVector.cpp
-        MyForvardList.h
-        MyForvardList.cpp
+        MyForvardList.hpp
         MyList.hpp
 )
 

@@ -2,24 +2,25 @@
 // Created by user on 6/3/24.
 //
 
-#ifndef OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_MYLIST_HPP
-#define OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_MYLIST_HPP
+#ifndef OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_MYFORVARDLIST_HPP
+#define OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_MYFORVARDLIST_HPP
 
 #include "MyContainer.h"
 #include <iostream>
 
-template <typename T> class MyList : public MyContainer {
+template <typename T>
+class MyForvardList: public MyContainer {
 
   public:
-    MyList() : head{nullptr}, tail{nullptr}, curSize{0} {};
+    MyForvardList() : head{nullptr}, tail{nullptr}, curSize{0}{};
 
-    MyList(const MyList& other) : head{nullptr}, tail{nullptr}, curSize{0} {
+    MyForvardList(const MyForvardList& other): head{nullptr}, tail{nullptr}, curSize{0} {
         for (Node* node = other.head; node; node = node->next) {
             append(node->data);
         }
     }
 
-    MyList& operator=(const MyList& other) {
+    MyForvardList& operator=(const MyForvardList& other) {
         if (this != &other) {
             for (Node* node = other.head; node; node = node->next) {
                 append(node->data);
@@ -28,18 +29,8 @@ template <typename T> class MyList : public MyContainer {
         return *this;
     }
 
-    // Move ctor
-    MyList(MyList&& other) noexcept { // r-value reference
-        head = other.head;
-        other.head = nullptr;
-        tail = other.tail;
-        other.tail = nullptr;
-        curSize = other.curSize;
-        other.curSize = 0;
-    }
-
     // Move assignment operator
-    MyList& operator=(MyList&& other) noexcept {
+    MyForvardList& operator=(MyForvardList&& other) noexcept {
         if (this != &other) {
             head = other.head;
             other.head = nullptr;
@@ -51,7 +42,18 @@ template <typename T> class MyList : public MyContainer {
         return *this;
     }
 
-    ~MyList() override {
+    // Move ctor
+    MyForvardList(
+        MyForvardList&& other) noexcept { // r-value reference
+        head = other.head;
+        other.head = nullptr;
+        tail = other.tail;
+        other.tail = nullptr;
+        curSize = other.curSize;
+        other.curSize = 0;
+    }
+
+    ~MyForvardList() override{
         Node* node_next = nullptr;
         for (Node* node = head; node; node = node_next) {
             node_next = node->next;
@@ -59,20 +61,19 @@ template <typename T> class MyList : public MyContainer {
         }
     };
 
-    void push_back(T value) override {
+    void push_back(T value) {
         append(value);
     };
 
-    void insert(std::size_t pos, T value) override {
+    void insert(std::size_t pos, T value) override{
 
         std::size_t i = 0;
         Node* prevNode = nullptr;
+        std::size_t prevSize = curSize;
         for (Node* node = head; node; node = node->next, i++) {
             if (i == pos) {
                 Node* newNode = new Node;
                 newNode->data = value;
-                newNode->prev = prevNode;
-                node->prev = newNode;
                 if (prevNode) {
                     newNode->next = prevNode->next;
                     prevNode->next = newNode;
@@ -85,7 +86,6 @@ template <typename T> class MyList : public MyContainer {
             }
             prevNode = node;
         }
-
         throw "out of the range";
     };
 
@@ -111,11 +111,11 @@ template <typename T> class MyList : public MyContainer {
         throw "out of the range";
     };
 
-    std::size_t size() const override {
+    std::size_t size() const override{
         return curSize;
     };
 
-    T& operator[](std::size_t pos) const override {
+    T& operator[](std::size_t pos) const override{
 
         std::size_t i = 0;
         for (Node* node = head; node; node = node->next, i++) {
@@ -127,27 +127,22 @@ template <typename T> class MyList : public MyContainer {
         throw "out of the range";
     };
 
-    struct Node {
+    struct Node{
         Node* next;
-        Node* prev;
         T data;
     };
 
-    struct iterator {
+    struct iterator{
       public:
-        explicit iterator(Node* ptr) : ptr{ptr} {};
+        explicit iterator(Node *ptr) : ptr{ptr}{};
+
         iterator& operator++() {
             if (!ptr)
                 throw "empty iterator";
             ptr = ptr->next;
             return *this;
         }
-        iterator& operator--() {
-            if (!ptr)
-                throw "empty iterator";
-            ptr = ptr->prev;
-            return *this;
-        }
+
         bool operator!=(const iterator& other) {
             return ptr != other.ptr;
         }
@@ -161,7 +156,7 @@ template <typename T> class MyList : public MyContainer {
         }
 
       private:
-        Node* ptr;
+        Node *ptr;
     };
 
     iterator begin() const {
@@ -177,7 +172,6 @@ template <typename T> class MyList : public MyContainer {
         Node* newNode = new Node;
         newNode->data = value;
         newNode->next = nullptr;
-        newNode->prev = tail;
         if (!head)
             head = newNode;
         if (tail) {
@@ -188,13 +182,13 @@ template <typename T> class MyList : public MyContainer {
         }
         curSize++;
     }
-    Node* head;
-    Node* tail;
+    Node *head;
+    Node *tail;
     std::size_t curSize;
 };
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, const MyList<T>& rhs) {
+std::ostream& operator<<(std::ostream& os, const MyForvardList<T>& rhs) {
     for (auto iter = rhs.begin(); iter != rhs.end(); ++iter) {
         if (iter != rhs.begin())
             os << ' ';
@@ -202,4 +196,5 @@ std::ostream& operator<<(std::ostream& os, const MyList<T>& rhs) {
     }
     return os;
 }
-#endif // OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_MYLIST_HPP
+
+#endif // OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_MYFORVARDLIST_HPP
