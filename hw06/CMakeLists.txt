@@ -5,8 +5,7 @@ project(06.homework)
 add_executable(my_container
         main.cpp
         MyContainer.h
-        MyVector.h
-        MyVector.cpp
+        MyVector.hpp
         MyForvardList.hpp
         MyList.hpp
 )
