@@ -8,13 +8,12 @@
 #include "MyContainer.h"
 #include <iostream>
 
-template <typename T>
-class MyList: public MyContainer {
+template <typename T> class MyList : public MyContainer {
 
   public:
-    MyList() : head{nullptr}, tail{nullptr}, curSize{0}{};
+    MyList() : head{nullptr}, tail{nullptr}, curSize{0} {};
 
-    MyList(const MyList& other): head{nullptr}, tail{nullptr}, curSize{0} {
+    MyList(const MyList& other) : head{nullptr}, tail{nullptr}, curSize{0} {
         for (Node* node = other.head; node; node = node->next) {
             append(node->data);
         }
@@ -30,8 +29,7 @@ class MyList: public MyContainer {
     }
 
     // Move ctor
-    MyList(
-        MyList&& other) noexcept { // r-value reference
+    MyList(MyList&& other) noexcept { // r-value reference
         head = other.head;
         other.head = nullptr;
         tail = other.tail;
@@ -117,7 +115,7 @@ class MyList: public MyContainer {
         return curSize;
     };
 
-    T& operator[](std::size_t pos) const override{
+    T& operator[](std::size_t pos) const override {
 
         std::size_t i = 0;
         for (Node* node = head; node; node = node->next, i++) {
@@ -129,15 +127,15 @@ class MyList: public MyContainer {
         throw "out of the range";
     };
 
-    struct Node{
+    struct Node {
         Node* next;
         Node* prev;
         T data;
     };
 
-    struct iterator{
+    struct iterator {
       public:
-        iterator(Node *ptr) : ptr{ptr}{};
+        iterator(Node* ptr) : ptr{ptr} {};
         iterator& operator++() {
             if (!ptr)
                 throw "empty iterator";
@@ -163,7 +161,7 @@ class MyList: public MyContainer {
         }
 
       private:
-        Node *ptr;
+        Node* ptr;
     };
 
     iterator begin() const {
@@ -190,13 +188,13 @@ class MyList: public MyContainer {
         }
         curSize++;
     }
-    Node *head;
-    Node *tail;
+    Node* head;
+    Node* tail;
     std::size_t curSize;
 };
 
 template <typename T>
-std::ostream& operator<<(std::ostream& os, const MyList<T> &rhs) {
+std::ostream& operator<<(std::ostream& os, const MyList<T>& rhs) {
     for (auto iter = rhs.begin(); iter != rhs.end(); ++iter) {
         if (iter != rhs.begin())
             os << ' ';
