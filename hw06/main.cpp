@@ -1,20 +1,20 @@
 //
 // Created by user on 6/2/24.
 //
-#include "MyVector.h"
 #include "MyForvardList.h"
-#include "MyList.h"
+#include "MyList.hpp"
+#include "MyVector.h"
 
 int main() {
-        MyVector v1;
+//        MyVector v1;
 //    MyForvardList v1;
-//    MyList v1;
+    MyList<int> v1;
     for (int i = 0; i < 10; ++i) {
         v1.push_back(i);
     }
-    MyVector v2 = std::move(v1);
+//    MyVector v2 = std::move(v1);
 //    MyForvardList v2 = std::move(v1);
-//    MyList v2 = std::move(v1);
+    MyList v2 = std::move(v1);
     std::cout << v2 << std::endl;
 
     std::cout << v2.size() << std::endl;
