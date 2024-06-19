@@ -87,12 +87,11 @@ void MyForvardList::insert(std::size_t pos, int value) {
                 head = newNode;
             }
             curSize++;
-            break;
+            return;
         }
         prevNode = node;
     }
-    if (curSize == prevSize)
-        append(value);
+    throw "out of the range";
 };
 
 void MyForvardList::erase(std::size_t pos) {
@@ -110,10 +109,11 @@ void MyForvardList::erase(std::size_t pos) {
                 tail = prevNode;
             curSize--;
             delete node;
-            break;
+            return;
         }
         prevNode = node;
     }
+    throw "out of the range";
 };
 
 std::size_t MyForvardList::size() const {
@@ -143,7 +143,7 @@ MyForvardList::iterator MyForvardList::begin() const {
     return {head};
 }
 
-MyForvardList::iterator MyForvardList::end() const {
+MyForvardList::iterator MyForvardList::end() {
     return {nullptr};
 }
 

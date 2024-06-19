@@ -90,12 +90,12 @@ void MyList::insert(std::size_t pos, int value) {
                 head = newNode;
             }
             curSize++;
-            break;
+            return;
         }
         prevNode = node;
     }
-    if (curSize == prevSize)
-        append(value);
+
+    throw "out of the range";
 };
 
 void MyList::erase(std::size_t pos) {
@@ -113,10 +113,11 @@ void MyList::erase(std::size_t pos) {
                 tail = prevNode;
             curSize--;
             delete node;
-            break;
+            return;
         }
         prevNode = node;
     }
+    throw "out of the range";
 };
 
 std::size_t MyList::size() const {
@@ -153,7 +154,7 @@ MyList::iterator MyList::begin() const {
     return {head};
 }
 
-MyList::iterator MyList::end() const {
+MyList::iterator MyList::end() {
     return {nullptr};
 }
 

@@ -45,7 +45,7 @@ class MyList: public MyContainer {
     };
 
     iterator begin() const;
-    iterator end() const ;
+    static iterator end() ;
 
   private:
     void append(int value);
