@@ -61,11 +61,11 @@ class MyList: public MyContainer {
         }
     };
 
-    void push_back(int value) override {
+    void push_back(T value) override {
         append(value);
     };
 
-    void insert(std::size_t pos, int value) override {
+    void insert(std::size_t pos, T value) override {
 
         std::size_t i = 0;
         Node* prevNode = nullptr;
@@ -117,7 +117,7 @@ class MyList: public MyContainer {
         return curSize;
     };
 
-    int& operator[](std::size_t pos) const override{
+    T& operator[](std::size_t pos) const override{
 
         std::size_t i = 0;
         for (Node* node = head; node; node = node->next, i++) {
