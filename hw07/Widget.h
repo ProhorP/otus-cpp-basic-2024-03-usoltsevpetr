@@ -9,14 +9,13 @@
 class Widget {
 
   public:
-    explicit inline Widget() : ptr{nullptr}, check{false}{};
-    explicit inline Widget(std::size_t *ptr) : ptr{ptr}, check{false}{};
+    explicit inline Widget() : ptr{nullptr}{};
+    explicit inline Widget(std::size_t *ptr) : ptr{ptr}{};
     Widget(const Widget& other);
     Widget& operator=(const Widget& other);
     ~Widget();
 
   private:
-    bool check;
     std::size_t *ptr; //non free
 };
 
