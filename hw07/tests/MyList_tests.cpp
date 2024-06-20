@@ -1,10 +1,10 @@
-#include "MyVector.hpp"
+#include "MyList.hpp"
 #include "Widget.h"
 #include <gtest/gtest.h>
 
-TEST(MyVector, Create) {
+TEST(MyList, Create) {
     // Arrange
-    MyVector<int> container;
+    MyList<int> container;
 
     // Act (empty for this test)
 
@@ -12,10 +12,10 @@ TEST(MyVector, Create) {
     ASSERT_EQ(container.size(), 0);
 }
 
-struct MyVectorFixture : public testing::Test {
+struct MyListFixture : public testing::Test {
 
     const size_t count = 10;
-    MyVector<std::size_t>* container = nullptr;
+    MyList<std::size_t>* container = nullptr;
 
     // Per-test-suite set-up.
     static void SetUpTestSuite() {
@@ -31,7 +31,7 @@ struct MyVectorFixture : public testing::Test {
     void SetUp() override {
         //        std::cout << "SetUp" << std::endl;
         // Arrange
-        container = new MyVector<std::size_t>(); // the same container instance for all
+        container = new MyList<std::size_t>(); // the same container instance for all
                                             // test cases
 
         // Create container with elementCount elements
@@ -48,7 +48,7 @@ struct MyVectorFixture : public testing::Test {
     }
 };
 
-TEST_F(MyVectorFixture, PushBack) {
+TEST_F(MyListFixture, PushBack) {
     // Act
     container->push_back(0);
 
@@ -56,7 +56,7 @@ TEST_F(MyVectorFixture, PushBack) {
     ASSERT_EQ(container->size(), count + 1);
 }
 
-TEST_F(MyVectorFixture, PushFront) {
+TEST_F(MyListFixture, PushFront) {
 
     container->insert(0, 10);
 
@@ -64,7 +64,7 @@ TEST_F(MyVectorFixture, PushFront) {
     ASSERT_EQ(container->size(), count + 1);
 }
 
-TEST_F(MyVectorFixture, PushMiddle) {
+TEST_F(MyListFixture, PushMiddle) {
 
     container->insert(container->size() / 2, 20);
 
@@ -72,7 +72,7 @@ TEST_F(MyVectorFixture, PushMiddle) {
     ASSERT_EQ(container->size(), count + 1);
 }
 
-TEST_F(MyVectorFixture, EraseBack) {
+TEST_F(MyListFixture, EraseBack) {
 
     container->erase(container->size() - 1);
 
@@ -80,7 +80,7 @@ TEST_F(MyVectorFixture, EraseBack) {
     ASSERT_EQ(container->size(), count - 1);
 }
 
-TEST_F(MyVectorFixture, EraseFront) {
+TEST_F(MyListFixture, EraseFront) {
 
     container->erase(0);
 
@@ -88,7 +88,7 @@ TEST_F(MyVectorFixture, EraseFront) {
     ASSERT_EQ(container->size(), count - 1);
 }
 
-TEST_F(MyVectorFixture, EraseMiddle) {
+TEST_F(MyListFixture, EraseMiddle) {
 
     container->erase(container->size() / 2);
 
@@ -96,33 +96,33 @@ TEST_F(MyVectorFixture, EraseMiddle) {
     ASSERT_EQ(container->size(), count - 1);
 }
 
-TEST_F(MyVectorFixture, GetBack) {
+TEST_F(MyListFixture, GetBack) {
 
     // Assert
     ASSERT_EQ((*container)[container->size() - 1], 9);
 }
 
-TEST_F(MyVectorFixture, GetFront) {
+TEST_F(MyListFixture, GetFront) {
 
     // Assert
     ASSERT_EQ((*container)[0], 0);
 }
 
-TEST_F(MyVectorFixture, GetMiddle) {
+TEST_F(MyListFixture, GetMiddle) {
 
     // Assert
     ASSERT_EQ((*container)[container->size() / 2], 5);
 }
 
-TEST_F(MyVectorFixture, GetSize) {
+TEST_F(MyListFixture, GetSize) {
 
     // Assert
     ASSERT_EQ(container->size(), 10);
 }
 
-TEST_F(MyVectorFixture, Copy) {
+TEST_F(MyListFixture, Copy) {
 
-    MyVector<std::size_t> container_copy;
+    MyList<std::size_t> container_copy;
     container_copy.push_back(1);
     container_copy = *container;
 
@@ -133,20 +133,20 @@ TEST_F(MyVectorFixture, Copy) {
     }
 }
 
-TEST_F(MyVectorFixture, Move) {
+TEST_F(MyListFixture, Move) {
 
-    MyVector container_move = std::move(*container);
+    MyList container_move = std::move(*container);
 
     // Assert
     ASSERT_EQ(container->size(), 0);
     ASSERT_EQ(container_move.size(), 10);
 }
 
-TEST(MyVector, CheckDestructor) {
+TEST(MyList, CheckDestructor) {
     // Arrange
     std::size_t countDestructors = 0;
     const size_t count = 10;
-    auto *container = new MyVector<Widget>();
+    auto *container = new MyList<Widget>();
 
     //act
     for (std::size_t i = 0; i < count; ++i) {

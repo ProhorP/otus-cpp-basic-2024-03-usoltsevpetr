@@ -5,7 +5,10 @@ project(07.homework)
 add_subdirectory(googletest)
 
 add_executable(containers_tests
+        tests/main.cpp
         tests/MyVector_tests.cpp
+        tests/MyList_tests.cpp
+        tests/MyForvardList_tests.cpp
         Widget.h
         Widget.cpp
 )

@@ -1,10 +1,10 @@
-#include "MyVector.hpp"
+#include "MyForvardList.hpp"
 #include "Widget.h"
 #include <gtest/gtest.h>
 
-TEST(MyVector, Create) {
+TEST(MyForvardList, Create) {
     // Arrange
-    MyVector<int> container;
+    MyForvardList<int> container;
 
     // Act (empty for this test)
 
@@ -12,10 +12,10 @@ TEST(MyVector, Create) {
     ASSERT_EQ(container.size(), 0);
 }
 
-struct MyVectorFixture : public testing::Test {
+struct MyForvardListFixture : public testing::Test {
 
     const size_t count = 10;
-    MyVector<std::size_t>* container = nullptr;
+    MyForvardList<std::size_t>* container = nullptr;
 
     // Per-test-suite set-up.
     static void SetUpTestSuite() {
@@ -31,7 +31,7 @@ struct MyVectorFixture : public testing::Test {
     void SetUp() override {
         //        std::cout << "SetUp" << std::endl;
         // Arrange
-        container = new MyVector<std::size_t>(); // the same container instance for all
+        container = new MyForvardList<std::size_t>(); // the same container instance for all
                                             // test cases
 
         // Create container with elementCount elements
@@ -48,7 +48,7 @@ struct MyVectorFixture : public testing::Test {
     }
 };
 
-TEST_F(MyVectorFixture, PushBack) {
+TEST_F(MyForvardListFixture, PushBack) {
     // Act
     container->push_back(0);
 
@@ -56,7 +56,7 @@ TEST_F(MyVectorFixture, PushBack) {
     ASSERT_EQ(container->size(), count + 1);
 }
 
-TEST_F(MyVectorFixture, PushFront) {
+TEST_F(MyForvardListFixture, PushFront) {
 
     container->insert(0, 10);
 
@@ -64,7 +64,7 @@ TEST_F(MyVectorFixture, PushFront) {
     ASSERT_EQ(container->size(), count + 1);
 }
 
-TEST_F(MyVectorFixture, PushMiddle) {
+TEST_F(MyForvardListFixture, PushMiddle) {
 
     container->insert(container->size() / 2, 20);
 
@@ -72,7 +72,7 @@ TEST_F(MyVectorFixture, PushMiddle) {
     ASSERT_EQ(container->size(), count + 1);
 }
 
-TEST_F(MyVectorFixture, EraseBack) {
+TEST_F(MyForvardListFixture, EraseBack) {
 
     container->erase(container->size() - 1);
 
@@ -80,7 +80,7 @@ TEST_F(MyVectorFixture, EraseBack) {
     ASSERT_EQ(container->size(), count - 1);
 }
 
-TEST_F(MyVectorFixture, EraseFront) {
+TEST_F(MyForvardListFixture, EraseFront) {
 
     container->erase(0);
 
@@ -88,7 +88,7 @@ TEST_F(MyVectorFixture, EraseFront) {
     ASSERT_EQ(container->size(), count - 1);
 }
 
-TEST_F(MyVectorFixture, EraseMiddle) {
+TEST_F(MyForvardListFixture, EraseMiddle) {
 
     container->erase(container->size() / 2);
 
@@ -96,33 +96,33 @@ TEST_F(MyVectorFixture, EraseMiddle) {
     ASSERT_EQ(container->size(), count - 1);
 }
 
-TEST_F(MyVectorFixture, GetBack) {
+TEST_F(MyForvardListFixture, GetBack) {
 
     // Assert
     ASSERT_EQ((*container)[container->size() - 1], 9);
 }
 
-TEST_F(MyVectorFixture, GetFront) {
+TEST_F(MyForvardListFixture, GetFront) {
 
     // Assert
     ASSERT_EQ((*container)[0], 0);
 }
 
-TEST_F(MyVectorFixture, GetMiddle) {
+TEST_F(MyForvardListFixture, GetMiddle) {
 
     // Assert
     ASSERT_EQ((*container)[container->size() / 2], 5);
 }
 
-TEST_F(MyVectorFixture, GetSize) {
+TEST_F(MyForvardListFixture, GetSize) {
 
     // Assert
     ASSERT_EQ(container->size(), 10);
 }
 
-TEST_F(MyVectorFixture, Copy) {
+TEST_F(MyForvardListFixture, Copy) {
 
-    MyVector<std::size_t> container_copy;
+    MyForvardList<std::size_t> container_copy;
     container_copy.push_back(1);
     container_copy = *container;
 
@@ -133,20 +133,20 @@ TEST_F(MyVectorFixture, Copy) {
     }
 }
 
-TEST_F(MyVectorFixture, Move) {
+TEST_F(MyForvardListFixture, Move) {
 
-    MyVector container_move = std::move(*container);
+    MyForvardList container_move = std::move(*container);
 
     // Assert
     ASSERT_EQ(container->size(), 0);
     ASSERT_EQ(container_move.size(), 10);
 }
 
-TEST(MyVector, CheckDestructor) {
+TEST(MyForvardList, CheckDestructor) {
     // Arrange
     std::size_t countDestructors = 0;
     const size_t count = 10;
-    auto *container = new MyVector<Widget>();
+    auto *container = new MyForvardList<Widget>();
 
     //act
     for (std::size_t i = 0; i < count; ++i) {
