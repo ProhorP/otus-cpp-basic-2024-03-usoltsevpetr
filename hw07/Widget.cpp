@@ -16,5 +16,5 @@ Widget& Widget::operator=(const Widget& other) {
 
 Widget::~Widget() {
     if (ptr)
-        *ptr++;
+        (*ptr)++;
 }

@@ -144,12 +144,22 @@ TEST_F(MyVectorFixture, Move) {
 
 TEST(MyVector, CheckDestructor) {
     // Arrange
-    MyVector<Widget> list;
+    std::size_t countDestructors = 0;
+    const size_t count = 10;
+    auto *list = new MyVector<Widget>();
 
-    // Act (empty for this test)
+    //act
+    for (std::size_t i = 0; i < count; ++i) {
+        list->push_back(Widget(&countDestructors));
+    }
+
+    //reset count destructor
+    countDestructors = 0;
+
+    delete list;
 
     // Assert
-    ASSERT_EQ(list.size(), 0);
+    ASSERT_EQ(countDestructors, count);
 }
 
 int main(int argc, char** argv) {

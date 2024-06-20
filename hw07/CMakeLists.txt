@@ -17,7 +17,7 @@ target_include_directories(
 
 target_include_directories(
         containers_tests PRIVATE
-        ${CMAKE_Current_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # Link test target against gtest libraries
