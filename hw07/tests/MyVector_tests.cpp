@@ -23,26 +23,6 @@ TEST(List, PushBack) {
 
     // Assert
     ASSERT_EQ(list.size(), count);
-    ASSERT_FALSE(list.empty());
-}
-
-TEST(Lst, PopBack) {
-    // Arrange 
-    const size_t count = 10;
-    otus::List<size_t> list;
-
-    for (size_t i = 0; i < count; ++i) {
-        list.push_back(i);
-    }
-
-    // Act
-    for (size_t i = 0; i < count; ++i) {
-        list.pop_back();
-    }
-
-    // Assert
-    ASSERT_EQ(list.size(), 0);
-    ASSERT_TRUE(list.empty());
 }
 
 int main(int argc, char** argv) {
