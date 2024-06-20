@@ -8,7 +8,7 @@
 #include "MyContainer.h"
 #include <iostream>
 
-template <typename T> class MyList : public MyContainer {
+template <typename T> class MyList : public MyContainer<T> {
 
   public:
     MyList() : head{nullptr}, tail{nullptr}, curSize{0} {};

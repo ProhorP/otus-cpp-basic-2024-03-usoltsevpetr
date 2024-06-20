@@ -8,7 +8,7 @@
 #include <iostream>
 
 template <typename T>
-class MyVector: public MyContainer {
+class MyVector: public MyContainer<T> {
 
   public:
     MyVector() : data{nullptr}, curSize{0}, capacity{0}{};

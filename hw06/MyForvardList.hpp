@@ -9,7 +9,7 @@
 #include <iostream>
 
 template <typename T>
-class MyForvardList: public MyContainer {
+class MyForvardList: public MyContainer<T> {
 
   public:
     MyForvardList() : head{nullptr}, tail{nullptr}, curSize{0}{};

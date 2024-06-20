@@ -6,7 +6,7 @@
 #include "MyVector.hpp"
 
 int main() {
-        MyVector<int> v1;
+        MyVector<std::size_t> v1;
 //    MyForvardList<int> v1;
 //    MyList<int> v1;
     for (int i = 0; i < 10; ++i) {
