@@ -6,11 +6,18 @@ add_subdirectory(googletest)
 
 add_executable(containers_tests
         tests/MyVector_tests.cpp
+        Widget.h
+        Widget.cpp
 )
 
 target_include_directories(
         containers_tests PRIVATE
         "${CMAKE_SOURCE_DIR}/hw06"
+)
+
+target_include_directories(
+        containers_tests PRIVATE
+        ${CMAKE_Current_SOURCE_DIR}
 )
 
 # Link test target against gtest libraries

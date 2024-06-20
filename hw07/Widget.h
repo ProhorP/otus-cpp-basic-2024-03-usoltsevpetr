@@ -15,7 +15,7 @@ class Widget {
     ~Widget();
 
   private:
-    std::size_t *ptr;
+    std::size_t *ptr; //non free
 };
 
 #endif // OTUS_CPP_BASIC_2024_03_USOLTSEVPETR_WIDGET_H

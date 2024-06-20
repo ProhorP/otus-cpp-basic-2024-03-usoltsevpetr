@@ -1,4 +1,5 @@
 #include "MyVector.hpp"
+#include "Widget.h"
 #include <gtest/gtest.h>
 
 TEST(MyVector, Create) {
@@ -139,6 +140,16 @@ TEST_F(MyVectorFixture, Move) {
     // Assert
     ASSERT_EQ(list->size(), 0);
     ASSERT_EQ(list_move.size(), 10);
+}
+
+TEST(MyVector, CheckDestructor) {
+    // Arrange
+    MyVector<Widget> list;
+
+    // Act (empty for this test)
+
+    // Assert
+    ASSERT_EQ(list.size(), 0);
 }
 
 int main(int argc, char** argv) {
