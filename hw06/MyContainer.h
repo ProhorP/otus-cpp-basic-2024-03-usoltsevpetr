@@ -14,6 +14,7 @@ class MyContainer {
     virtual void push_back(T value) = 0;
     virtual void insert(std::size_t pos, T value) = 0;
     virtual void erase(std::size_t pos) = 0;
+    virtual void clean() = 0;
     virtual std::size_t size() const = 0;
     virtual T& operator[](std::size_t pos) const = 0;
 };

@@ -24,6 +24,7 @@ class MyVector: public MyContainer<T> {
 
     MyVector& operator=(const MyVector& other) {
         if (this != &other) {
+            clean();
             data = new T[other.capacity];
             for (std::size_t i = 0; i < other.curSize; ++i) {
                 data[i] = other.data[i];
@@ -37,6 +38,7 @@ class MyVector: public MyContainer<T> {
     // Move assignment operator
     MyVector& operator=(MyVector&& other)  noexcept {
         if (this != &other) {
+            clean();
             data = other.data;
             other.data = nullptr;
             curSize = other.curSize;
@@ -57,8 +59,14 @@ class MyVector: public MyContainer<T> {
         other.capacity = 0;
     }
 
-    ~MyVector() override{
+    void clean() override {
         delete[] data;
+        curSize = 0;
+        capacity = 0;
+    };
+
+    ~MyVector() override{
+        clean();
     };
 
     void push_back(T value) override{

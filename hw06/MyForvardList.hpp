@@ -22,6 +22,7 @@ class MyForvardList: public MyContainer<T> {
 
     MyForvardList& operator=(const MyForvardList& other) {
         if (this != &other) {
+            clean();
             for (Node* node = other.head; node; node = node->next) {
                 append(node->data);
             }
@@ -32,6 +33,7 @@ class MyForvardList: public MyContainer<T> {
     // Move assignment operator
     MyForvardList& operator=(MyForvardList&& other) noexcept {
         if (this != &other) {
+            clean();
             head = other.head;
             other.head = nullptr;
             tail = other.tail;
@@ -53,12 +55,19 @@ class MyForvardList: public MyContainer<T> {
         other.curSize = 0;
     }
 
-    ~MyForvardList() override{
+    void clean() override {
         Node* node_next = nullptr;
         for (Node* node = head; node; node = node_next) {
             node_next = node->next;
             delete node;
         }
+        head = nullptr;
+        tail = nullptr;
+        curSize = 0;
+    };
+
+    ~MyForvardList() override{
+        clean();
     };
 
     void push_back(T value) {

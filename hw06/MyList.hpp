@@ -21,6 +21,7 @@ template <typename T> class MyList : public MyContainer<T> {
 
     MyList& operator=(const MyList& other) {
         if (this != &other) {
+            clean();
             for (Node* node = other.head; node; node = node->next) {
                 append(node->data);
             }
@@ -41,6 +42,7 @@ template <typename T> class MyList : public MyContainer<T> {
     // Move assignment operator
     MyList& operator=(MyList&& other) noexcept {
         if (this != &other) {
+            clean();
             head = other.head;
             other.head = nullptr;
             tail = other.tail;
@@ -51,12 +53,19 @@ template <typename T> class MyList : public MyContainer<T> {
         return *this;
     }
 
-    ~MyList() override {
+    void clean() override {
         Node* node_next = nullptr;
         for (Node* node = head; node; node = node_next) {
             node_next = node->next;
             delete node;
         }
+        head = nullptr;
+        tail = nullptr;
+        curSize = 0;
+    };
+
+    ~MyList() override {
+        clean();
     };
 
     void push_back(T value) override {

@@ -121,8 +121,11 @@ TEST_F(MyVectorFixture, GetSize) {
 
 TEST_F(MyVectorFixture, Copy) {
 
-    MyVector<std::size_t> list_copy(*list);
+    MyVector<std::size_t> list_copy;
+    list_copy.push_back(1);
+    list_copy = *list;
 
+    ASSERT_EQ(list_copy.size(), list->size());
     // Assert
     for (std::size_t i = 0; i < count; ++i) {
         ASSERT_EQ((*list)[i], list_copy[i]);
