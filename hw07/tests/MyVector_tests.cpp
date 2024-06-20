@@ -1,7 +1,7 @@
 #include "MyVector.hpp"
 #include <gtest/gtest.h>
 
-TEST(List, Create) {
+TEST(MyVector, Create) {
     // Arrange
     MyVector<int> list;
 
@@ -11,188 +11,130 @@ TEST(List, Create) {
     ASSERT_EQ(list.size(), 0);
 }
 
-TEST(List, PushBack) {
-    // Arrange
-    const size_t count = 10;
-    MyVector<std::size_t> list;
+struct MyVectorFixture : public testing::Test {
 
-    // Act
-    for (std::size_t i = 0; i < count; ++i) {
-        list.push_back(i);
+    const size_t count = 10;
+    MyVector<std::size_t>* list = nullptr;
+
+    // Per-test-suite set-up.
+    static void SetUpTestSuite() {
+        //        std::cout << "SetUpTestSuite" << std::endl;
     }
 
+    // Per-test-suite tear-down.
+    static void TearDownTestSuite() {
+        //        std::cout << "TearDownTestSuite" << std::endl;
+    }
+
+    // Per-test set-up
+    void SetUp() override {
+        //        std::cout << "SetUp" << std::endl;
+        // Arrange
+        list = new MyVector<std::size_t>(); // the same list instance for all
+                                            // test cases
+
+        // Create list with elementCount elements
+        for (size_t i = 0; i < count; ++i)
+            list->push_back(i);
+    }
+
+    // You can define per-test tear-down logic as usual.
+    void TearDown() override {
+        delete list;
+        list = nullptr;
+        //        std::cout << "TearDown" << std::endl;
+        // Nothing to do for now
+    }
+};
+
+TEST_F(MyVectorFixture, PushBack) {
+    // Act
+    list->push_back(0);
+
     // Assert
-    ASSERT_EQ(list.size(), count);
+    ASSERT_EQ(list->size(), count + 1);
 }
 
-TEST(List, PushFront) {
-    // Arrange
-    const size_t count = 10;
-    MyVector<std::size_t> list;
+TEST_F(MyVectorFixture, PushFront) {
 
-    // Act
-    for (std::size_t i = 0; i < count; ++i) {
-        list.push_back(i);
-    }
-
-    list.insert(0, 10);
+    list->insert(0, 10);
 
     // Assert
-    ASSERT_EQ(list.size(), count + 1);
+    ASSERT_EQ(list->size(), count + 1);
 }
 
-TEST(List, PushMiddle) {
-    // Arrange
-    const size_t count = 10;
-    MyVector<std::size_t> list;
+TEST_F(MyVectorFixture, PushMiddle) {
 
-    // Act
-    for (std::size_t i = 0; i < count; ++i) {
-        list.push_back(i);
-    }
-
-    list.insert(list.size() / 2, 20);
+    list->insert(list->size() / 2, 20);
 
     // Assert
-    ASSERT_EQ(list.size(), count + 1);
+    ASSERT_EQ(list->size(), count + 1);
 }
 
-TEST(List, EraseBack) {
-    // Arrange
-    const size_t count = 10;
-    MyVector<std::size_t> list;
+TEST_F(MyVectorFixture, EraseBack) {
 
-    // Act
-    for (std::size_t i = 0; i < count; ++i) {
-        list.push_back(i);
-    }
-
-    list.erase(list.size() - 1);
+    list->erase(list->size() - 1);
 
     // Assert
-    ASSERT_EQ(list.size(), count - 1);
+    ASSERT_EQ(list->size(), count - 1);
 }
 
-TEST(List, EraseFront) {
-    // Arrange
-    const size_t count = 10;
-    MyVector<std::size_t> list;
+TEST_F(MyVectorFixture, EraseFront) {
 
-    // Act
-    for (std::size_t i = 0; i < count; ++i) {
-        list.push_back(i);
-    }
-
-    list.erase(0);
+    list->erase(0);
 
     // Assert
-    ASSERT_EQ(list.size(), count - 1);
+    ASSERT_EQ(list->size(), count - 1);
 }
 
-TEST(List, EraseMiddle) {
-    // Arrange
-    const size_t count = 10;
-    MyVector<std::size_t> list;
+TEST_F(MyVectorFixture, EraseMiddle) {
 
-    // Act
-    for (std::size_t i = 0; i < count; ++i) {
-        list.push_back(i);
-    }
-
-    list.erase(list.size() / 2);
+    list->erase(list->size() / 2);
 
     // Assert
-    ASSERT_EQ(list.size(), count - 1);
+    ASSERT_EQ(list->size(), count - 1);
 }
 
-TEST(List, GetBack) {
-    // Arrange
-    const size_t count = 10;
-    MyVector<std::size_t> list;
-
-    // Act
-    for (std::size_t i = 0; i < count; ++i) {
-        list.push_back(i);
-    }
+TEST_F(MyVectorFixture, GetBack) {
 
     // Assert
-    ASSERT_EQ(list[list.size() - 1], 9);
+    ASSERT_EQ((*list)[list->size() - 1], 9);
 }
 
-TEST(List, GetFront) {
-    // Arrange
-    const size_t count = 10;
-    MyVector<std::size_t> list;
-
-    // Act
-    for (std::size_t i = 0; i < count; ++i) {
-        list.push_back(i);
-    }
+TEST_F(MyVectorFixture, GetFront) {
 
     // Assert
-    ASSERT_EQ(list[0], 0);
+    ASSERT_EQ((*list)[0], 0);
 }
 
-TEST(List, GetMiddle) {
-    // Arrange
-    const size_t count = 10;
-    MyVector<std::size_t> list;
-
-    // Act
-    for (std::size_t i = 0; i < count; ++i) {
-        list.push_back(i);
-    }
+TEST_F(MyVectorFixture, GetMiddle) {
 
     // Assert
-    ASSERT_EQ(list[list.size() / 2], 5);
+    ASSERT_EQ((*list)[list->size() / 2], 5);
 }
 
-TEST(List, GetSize) {
-    // Arrange
-    const size_t count = 10;
-    MyVector<std::size_t> list;
-
-    // Act
-    for (std::size_t i = 0; i < count; ++i) {
-        list.push_back(i);
-    }
+TEST_F(MyVectorFixture, GetSize) {
 
     // Assert
-    ASSERT_EQ(list.size(), 10);
+    ASSERT_EQ(list->size(), 10);
 }
 
-TEST(List, Copy) {
-    // Arrange
-    const size_t count = 10;
-    MyVector<std::size_t> list;
+TEST_F(MyVectorFixture, Copy) {
 
-    // Act
-    for (std::size_t i = 0; i < count; ++i) {
-        list.push_back(i);
-    }
-
-    MyVector<std::size_t> list_copy(list);
+    MyVector<std::size_t> list_copy(*list);
 
     // Assert
     for (std::size_t i = 0; i < count; ++i) {
-        ASSERT_EQ(list[i], list_copy[i]);
+        ASSERT_EQ((*list)[i], list_copy[i]);
     }
 }
 
-TEST(List, Move) {
-    // Arrange
-    const size_t count = 10;
-    MyVector<std::size_t> list;
+TEST_F(MyVectorFixture, Move) {
 
-    // Act
-    for (std::size_t i = 0; i < count; ++i) {
-        list.push_back(i);
-    }
-
-    MyVector list_move = std::move(list);
+    MyVector list_move = std::move(*list);
 
     // Assert
-    ASSERT_EQ(list.size(), 0);
+    ASSERT_EQ(list->size(), 0);
     ASSERT_EQ(list_move.size(), 10);
 }
 
