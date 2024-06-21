@@ -109,6 +109,8 @@ template <typename T> class MyList : public MyContainer<T> {
                 } else {
                     head = node->next;
                 }
+                if (node->next)
+                    node->next->prev = prevNode;
                 if (tail == node)
                     tail = prevNode;
                 curSize--;
