@@ -80,8 +80,7 @@ class MyVector: public MyContainer<T> {
 
     void insert(std::size_t pos, T value) override{
 
-        if (!check_position(pos))
-            return;
+        check_position(pos);
 
         curSize++;
 
@@ -100,8 +99,7 @@ class MyVector: public MyContainer<T> {
 
     void erase(std::size_t pos) override {
 
-        if (!check_position(pos))
-            return;
+        check_position(pos);
 
         if (curSize) {
             curSize--;
@@ -117,8 +115,7 @@ class MyVector: public MyContainer<T> {
 
     T& operator[](std::size_t pos) const override{
 
-        if (!check_position(pos))
-            throw "fail";
+        check_position(pos);
 
         return data[pos];
     };
@@ -177,12 +174,9 @@ class MyVector: public MyContainer<T> {
         }
     }
 
-    bool check_position(std::size_t pos) const {
-        if (pos >= curSize) {
-            std::cout << "invalid position: " << pos << std::endl;
-            return false;
-        }
-        return true;
+    void check_position(std::size_t pos) const {
+        if (pos >= curSize)
+            throw "out of the range";
     }
     T *data;
     std::size_t curSize;
