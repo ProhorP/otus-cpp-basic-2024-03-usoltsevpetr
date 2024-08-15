@@ -18,6 +18,7 @@
 const size_t TOPK = 10;
 const size_t CORES = 4;
 
+//Оптимизация:unordered_map за место map
 using Counter = std::unordered_map<std::string, std::size_t>;
 
 std::string tolower(const std::string& str);
@@ -26,6 +27,7 @@ void count_words(std::istream& stream, Counter&);
 
 void print_topk(std::ostream& stream, const Counter&, const size_t k);
 
+//Оптимизация: у каждого потока свой freq_dict
 Counter* freq_dicts = NULL;
 
 void count_words_thread(std::vector<std::string> files, size_t number) {
@@ -49,10 +51,12 @@ int main(int argc, char* argv[]) {
 
     auto start = std::chrono::high_resolution_clock::now();
 
+//Инициирование счетчиков для потоков
     freq_dicts = new Counter[CORES];
 
     std::array<std::vector<std::string>, CORES> files_threads;
 
+//Заполнение веторов строк для каждого потока
     for (int i = 1; i < argc; ++i) {
         files_threads[i % CORES].push_back(argv[i]);
     }
@@ -72,6 +76,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
+//Агрегация хэш-таблиц потоков
     for (size_t i = 1; i < CORES; i++) {
         for (auto pair = freq_dicts[i].cbegin(); pair != freq_dicts[i].cend();
              ++pair) {
@@ -92,8 +97,8 @@ int main(int argc, char* argv[]) {
 }
 
 std::string tolower(const std::string& str) {
-    //Оптимизация: за счет выделения статического буфера и расширения его при необходимости
-    static std::string lower_str;
+    // Оптимизация: однократное создание lower_str
+    thread_local std::string lower_str;
     lower_str.clear();
     std::transform(std::cbegin(str), std::cend(str),
                    std::back_inserter(lower_str),
@@ -102,9 +107,15 @@ std::string tolower(const std::string& str) {
 };
 
 void count_words(std::istream& stream, Counter& counter) {
-    std::for_each(std::istream_iterator<std::string>(stream),
-                  std::istream_iterator<std::string>(),
-                  [&counter](const std::string& s) { ++counter[tolower(s)]; });
+    // Оптимизация: однократное создание stream_string
+    thread_local std::string stream_string;
+    while (stream >> stream_string) {
+        ++counter[tolower(stream_string)];
+    }
+    // std::for_each(std::istream_iterator<std::string>(stream),
+    //               std::istream_iterator<std::string>(),
+    //               [&counter](const std::string& s) { ++counter[tolower(s)];
+    //               });
 }
 
 void print_topk(std::ostream& stream, const Counter& counter, const size_t k) {
