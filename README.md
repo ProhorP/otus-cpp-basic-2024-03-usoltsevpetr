@@ -1,1 +1,1 @@
-# otus-cpp-basic-2024-03-usoltsevpetr
+Список выполненных домашних работ в рамках курса "C++ Developer. Basic" от сайта otus.ru
